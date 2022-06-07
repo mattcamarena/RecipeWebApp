@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/viewrecipe/viewrecipe.css">
+    <script>
+      fetch('/api/getrecipe/'+ "<%= recipeG%>")
+      .then(response => {
+        return response.json();
+      })
+      .then(jsondata => loadtopage(jsondata))
+    </script>
+<script src="/viewrecipe/viewrecipe.js"></script>
+    <a href="/"><header><h1>My Recipe</h1></header></a>
+  </head>
+  <body>
+    <main>
+      <div id="recp">
+        <h2 id="recipename"></h2>
+        <h3>Ingredients</h3>
+        <ul id="ingredients"></ul>
+        <h3>Instructions</h3>
+        <ol id="instructions"></ol>
+      </div>
+    </main>
+    <footer>
+      <div id="deleteRecipe">Delete Recipe</div>
+    </footer>
+    
+  </body>
+</html>

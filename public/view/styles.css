@@ -1,0 +1,59 @@
+header {
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  color: white;
+  font-family: sans-serif;
+}
+
+body{
+   font-family: sans-serif;
+  background: url(https://cdn-media-1.freecodecamp.org/imgr/MJAkxbh.png);
+  height: 100vh;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+}
+main {
+  justify-content: center;
+  align-items: center;
+}
+
+ a, a:hover, a:focus, a:active {
+     text-decoration: none;
+     color: inherit;
+ }
+
+ul {
+  list-style-type: none;/* Remove bullets */
+  padding: 0;
+  padding-top: 5px; /* Remove padding */
+  margin: 0; /* Remove margins */
+  
+}
+
+li {
+  background: white;
+  border: 1px solid black;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 10px;
+  left: 0;
+
+}
+#addrecipebutton {
+  background: lightblue;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px; /* Remove padding */
+  margin: 5px; /* Remove margins */
+}

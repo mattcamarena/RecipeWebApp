@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/addrecipe/addrecipestyle.css">
+    <script src="/addrecipe/addrecipe.js"></script>
+    <header><h1>My Recipes</h1></header>
+</head>
+  
+<body>
+
+  <h1 id="title">Add new Recipe</h1>
+  <fieldset >
+    <form id="recipe-form" action="/api/addrecipe" method="post">
+      
+      <div>
+        <label id="recipename-label" for="recipename" >Recipe Name</label>
+        <textarea id="uname" name="recipename" placeholder="Recipe's name" required></textarea>
+      </div>
+      
+      <div id="gtxtarea">
+        <label for="ingredient">Ingredients</label>
+        <textarea id="ingredients" name="ingredient" placeholder="ingredient" required></textarea>
+      </div>
+        
+      <button onclick="newIngredient()" id="ingr" type="button">Add Ingredient</button>
+      <button onclick="removeIngredient()" id="removeIngredients" type="button">Remove last Ingredient</button>
+        
+      <div id="stxtarea">
+        <label for="instruction">Instructions</label>
+        <textarea id="instructions" name="instruction" placeholder="instruction" required></textarea>
+      </div>
+      
+      <div>
+       <button onclick="newInstruction()" id="addInstruction" type="button">Add Instruction</button>
+       <button onclick="removeInstruction()" id="removeInstruct" type="button">Remove last Instruction</button>
+      </div>
+      
+      <label for="pass">Password</label>
+      <textarea id="pass" name="password" placeholder="pass" required></textarea>
+      <button type="submit" value="Submit">Submit</button>
+    </form>
+</fieldset>  
+</body>
+</html>

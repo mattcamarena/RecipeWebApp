@@ -1,0 +1,43 @@
+html {
+   font-family: sans-serif;
+}
+header {
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  color: white;
+  
+}
+
+body{
+  background: url(https://cdn-media-1.freecodecamp.org/imgr/MJAkxbh.png);
+  padding: 10px;
+  height: 100vh;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#recp {
+  width: 600px;
+  margin: auto;
+  background-color: rgba(244,226,198,.5);
+  padding: 15px;
+  border-radius: 10px;
+  border:1px solid black;
+  position: relative;
+  justify-content: center;
+  font-size: 1em;
+}
+
+#deleteRecipe {
+  color: red;
+}

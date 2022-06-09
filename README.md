@@ -7,6 +7,6 @@ The goal is to be able to:
   * Name
   * Ingredients
   * Type
-  * Creator
+  * Author
 * Edit/ Delete Recipes
 * Have user authorization to restrict adding / deleting / editing

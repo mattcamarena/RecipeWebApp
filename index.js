@@ -37,6 +37,7 @@ app.get('/viewrecipe/:food',function(req,res){
 // Return the recipe for selected food --> should change to the id in case of multiple ingredients
 app.get('/api/getrecipe/:food',function(req,res){
   //res.sendFile(path.resolve('public/recipe.html'));
+  
   var recipeName = req.params.food;
   Recipe.find({name: `${recipeName}`}, function(err, arr){
     if(err) return console.log(err);
@@ -79,16 +80,16 @@ app.get('/recipes.json', (req, res) => {
 });
 
 // UPLOAD RECIPE
-app.post('/api/addrecipe', (req,res) => {
+app.post('/api/addrecipe/', (req,res) => {
   if(req.body.password == "mom") {
-    var recipeA = req.body.recipename;
+    var recipeA = req.body.recipename.trim();
     var ing = req.body.ingredient ? [].concat(req.body.ingredient) : [];
     var ins = req.body.instruction ? [].concat(req.body.instruction): [];
   
     var newRecipe = new Recipe({name:recipeA, ingredients:ing, instructions:ins });
     newRecipe.save(function(err, data) {
       if (err) return console.error(err);
-      res.render('recipe.ejs', {recipeG: recipeA});
+      res.render('viewrecipe.ejs', {recipeG: recipeA});
     });
   }else{
       res.send('wrong pass');
@@ -96,12 +97,28 @@ app.post('/api/addrecipe', (req,res) => {
 });
 
 /*
-app.get('/api/deleterecipe/:id', (req,res) => {
-  Recipe.findByIdAndRemove(req.body.id, function(err){
+app.get('/api/deleterecipe/', (req,res) => {
+  console.log("hi")
+  Recipe.findByIdAndRemove(req.params.id, function(err){
     if(err) return console.log(err);
   });                
   res.json("gj");
 });
+*/
+
+app.get('/api/deleterecipe/:_id',function(req,res){
+  console.log("?");
+  var rid = req.params._id;
+
+  if(rid != null){
+  Recipe.findByIdAndRemove(rid, function(err){
+    if(err) return console.log(err);
+  });  
+  }
+  res.json("gj");
+    
+});
+/*
 const removeById = (personId, done) => {
   Person.findByIdAndRemove(
     personId,
@@ -112,8 +129,11 @@ const removeById = (personId, done) => {
   );
 };
 */
+
 //404 Error
 app.use(function(req, res, next) {
+  console.log("wut");
+  
     res.status(404);
     res.sendFile(__dirname + '/404.html');
 });

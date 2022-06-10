@@ -23,4 +23,11 @@ function loadtopage(jsn) {
 }
 
 
-
+function deleteRecipe() {
+  console.log("deleteing recipe");
+  fetch("./deleterecipe")
+.then(response => {
+  return response.json();
+})
+.then(jsondata => console.log(jsondata))
+}

@@ -1,6 +1,5 @@
-.vscode/*
 .env
-node_modules/
-.breakpoints
 .replit
 .replit.nix
+node_modules/
+.breakpoints

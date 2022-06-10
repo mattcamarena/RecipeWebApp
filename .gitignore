@@ -1,5 +1,5 @@
 .env
 .replit
-.replit.nix
+replit.nix
 node_modules/
 .breakpoints

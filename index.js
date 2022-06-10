@@ -80,7 +80,7 @@ app.get('/recipes.json', (req, res) => {
 
 // UPLOAD RECIPE
 app.post('/api/addrecipe', (req,res) => {
-  if(req.body.password == process.env.API_ID) {
+  if(req.body.password == "mom") {
     var recipeA = req.body.recipename;
     var ing = req.body.ingredient ? [].concat(req.body.ingredient) : [];
     var ins = req.body.instruction ? [].concat(req.body.instruction): [];
@@ -122,3 +122,13 @@ app.use(function(req, res, next) {
 app.listen(port, function(){
   console.log(`App server is running on port ${port}`);
 });
+
+
+// use late to load in data
+/*
+var mattCamarena = new Recipe({name: "Omlette", ingredients: ["eggs", "bacon", "cheese", "oil"], instructions:["mix together and cook in pan"] });
+
+  mattCamarena.save(function(err, data) {
+    if (err) return console.error(err);
+  });
+*/

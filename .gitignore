@@ -1,4 +1,5 @@
 .env
+README.md
 .replit
 replit.nix
 node_modules/

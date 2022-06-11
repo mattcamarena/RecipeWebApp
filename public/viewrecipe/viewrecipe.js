@@ -1,5 +1,7 @@
+
+var rid = "";
 function loadtopage(jsn) {
-  
+  rid = jsn._id;
   var title = (jsn.name);
   document.getElementById("recipename").innerText = title;
   
@@ -23,4 +25,24 @@ function loadtopage(jsn) {
     });
   }
       
+}
+
+function triggerMe()
+{
+    
+    if (confirm("Are you sure you want to delete")) 
+    {
+      hrefCall();
+      return true;
+    } 
+    else 
+    {
+        return false;
+    }
+}
+
+function hrefCall() {
+  fetch('../api/deleterecipe/' + rid)
+  .then(response => response.json())
+  .then(window.location.href = "../");
 }

@@ -3,7 +3,7 @@
   <head>
     <link rel="stylesheet" href="/viewrecipe/viewrecipe.css">
     <script>
-      fetch('/api/getrecipe/'+ "<%= recipeG%>")
+      fetch('/api/getrecipe/'+ "<%= recipeId%>")
       .then(response => {
         return response.json();
       })
@@ -23,7 +23,9 @@
       </div>
     </main>
     <footer>
-      <div id="deleteRecipe">Delete Recipe</div>
+      
+<a href="#null" onclick="triggerMe()">Delete Recipe</a>
+
     </footer>
     
   </body>

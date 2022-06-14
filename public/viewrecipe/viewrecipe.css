@@ -41,3 +41,11 @@ body{
 #deleteRecipe {
   color: red;
 }
+textarea {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  resize: vertical;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}

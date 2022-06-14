@@ -13,20 +13,52 @@
     <a href="/"><header><h1>My Recipe</h1></header></a>
   </head>
   <body>
-    <main>
-      <div id="recp">
+    <main id=recp>
+      <div id="viewdiv">
         <h2 id="recipename"></h2>
         <h3>Ingredients</h3>
         <ul id="ingredients"></ul>
         <h3>Instructions</h3>
         <ol id="instructions"></ol>
       </div>
-    </main>
-    <footer>
       
-<a href="#null" onclick="triggerMe()">Delete Recipe</a>
-
-    </footer>
+      <div id="editdiv" style="display: none;">
+      <form id="recipe-form" action="/api/addrecipe" method="post">
+        <div>
+          <label id="recipename-label" for="recipename" >Recipe Name</label>
+          <textarea id="uname" name="recipename" placeholder="Recipe's name" required></textarea>
+        </div>
+        
+        <div id="gtxtarea">
+          <label for="ingredient">Ingredients</label>
+          <textarea id="ingredients" name="ingredient" placeholder="ingredient" required></textarea>
+        </div>
+          
+        <button onclick="newIngredient()" id="ingr" type="button">Add Ingredient</button>
+        <button onclick="removeIngredient()" id="removeIngredients" type="button">Remove last Ingredient</button>
+          
+        <div id="stxtarea">
+          <label for="instruction">Instructions</label>
+          <textarea id="instructions" name="instruction" placeholder="instruction" required></textarea>
+        </div>
+        
+        <div>
+         <button onclick="newInstruction()" id="addInstruction" type="button">Add Instruction</button>
+         <button onclick="removeInstruction()" id="removeInstruct" type="button">Remove last Instruction</button>
+        </div>
+        
+        <label for="pass">Password</label>
+        <textarea id="pass" name="password" placeholder="pass" required></textarea>
+        <button type="submit" value="Submit">Submit</button>
+      </form>
+          <a href="#null" onclick="triggerMe()">Delete Recipe</a>
+        </div>
+    </main>
     
+    <button onclick="editRecipe()">Edit Recipe</button>
+    
+    <footer>
+    
+    </footer> 
   </body>
 </html>

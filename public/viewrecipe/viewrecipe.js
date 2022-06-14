@@ -46,3 +46,41 @@ function hrefCall() {
   .then(response => response.json())
   .then(window.location.href = "../");
 }
+// can make newingr/newinstr one function with attribute type as param
+function newIngredient(name){
+  const newNode = document.createElement("textarea");
+  newNode.setAttribute('name', "ingredient");
+  newNode.value = name;
+  const list = document.getElementById("gtxtarea");
+  list.appendChild(newNode);
+} 
+
+function removeIngredient(){
+  var select = document.getElementById('gtxtarea');
+  if(select.children.length > 2) select.removeChild(select.lastChild);
+} 
+
+function newInstruction(name){
+  const newNode = document.createElement("textarea");
+  newNode.setAttribute('name', "instruction");
+  newNode.value = name;
+  const list = document.getElementById("stxtarea");
+  
+  list.appendChild(newNode);
+} 
+
+function removeInstruction(){
+  var select = document.getElementById('stxtarea');
+  if(select.children.length > 2) select.removeChild(select.lastChild);
+} 
+
+
+function editRecipe(){
+  document.getElementById('viewdiv').style.display = "none";
+  document.getElementById('editdiv').style.display = "block";
+  loadRecipe();
+}
+
+function loadRecipe(){
+  
+}

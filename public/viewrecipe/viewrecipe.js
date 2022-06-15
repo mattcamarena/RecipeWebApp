@@ -1,6 +1,7 @@
-
 var rid = "";
+var saveRecipe;
 function loadtopage(jsn) {
+  saveRecipe = jsn;
   rid = jsn._id;
   var title = (jsn.name);
   document.getElementById("recipename").innerText = title;
@@ -48,6 +49,7 @@ function hrefCall() {
 }
 // can make newingr/newinstr one function with attribute type as param
 function newIngredient(name){
+  if(typeof(name) === 'undefined') name = "";
   const newNode = document.createElement("textarea");
   newNode.setAttribute('name', "ingredient");
   newNode.value = name;
@@ -61,6 +63,7 @@ function removeIngredient(){
 } 
 
 function newInstruction(name){
+  if(typeof(name) === 'undefined') name = "";
   const newNode = document.createElement("textarea");
   newNode.setAttribute('name', "instruction");
   newNode.value = name;
@@ -81,6 +84,6 @@ function editRecipe(){
   loadRecipe();
 }
 
-function loadRecipe(){
+function loadRecipeonEdit(){
   
 }

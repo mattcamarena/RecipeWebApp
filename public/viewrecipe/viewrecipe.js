@@ -52,7 +52,7 @@ function newIngredient(name){
   if(typeof(name) === 'undefined') name = "";
   const newNode = document.createElement("textarea");
   newNode.setAttribute('name', "ingredient");
-  newNode.value = name;
+  newNode.innerText = name;
   const list = document.getElementById("gtxtarea");
   list.appendChild(newNode);
 } 
@@ -66,7 +66,7 @@ function newInstruction(name){
   if(typeof(name) === 'undefined') name = "";
   const newNode = document.createElement("textarea");
   newNode.setAttribute('name', "instruction");
-  newNode.value = name;
+  newNode.innerText = name;
   const list = document.getElementById("stxtarea");
   
   list.appendChild(newNode);
@@ -81,9 +81,25 @@ function removeInstruction(){
 function editRecipe(){
   document.getElementById('viewdiv').style.display = "none";
   document.getElementById('editdiv').style.display = "block";
-  loadRecipe();
+  loadRecipeonEdit();
 }
 
 function loadRecipeonEdit(){
-  
+  document.getElementById("recipe-form").action += rid;
+  // load name
+  document.getElementById("uname").innerText = saveRecipe.name;
+  // load ingredients
+  var ingr = saveRecipe.ingredients;
+  if(ingr.length > 0){
+    ingr.forEach((item)=>{
+      newIngredient(item);
+    });
+  }
+  // load instructions
+  var instr = saveRecipe.instructions;
+  if(instr.length > 0){
+    instr.forEach((item)=>{
+      newInstruction(item);
+    });
+  }
 }

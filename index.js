@@ -96,6 +96,24 @@ app.get('/api/deleterecipe/:_id',function(req,res){
   res.json("gj");
 });
 
+app.post('/api/updaterecipe/:_id',function(req,res){
+  var rid = req.params._id;
+  var uName = req.body.recipename.trim();
+  var ing = req.body.ingredient ? [].concat(req.body.ingredient) : [];
+  var ins = req.body.instruction ? [].concat(req.body.instruction): [];
+  
+  if(rid != null){
+    Recipe.findOneAndUpdate({_id: rid}, {name: uName, ingredients: ing, instructions: ins}, function(err){
+      if(!err){
+        res.render('viewrecipe.ejs', {recipeId: rid});
+      }else{
+        res.send('index.html');
+      }
+      
+    });  
+  }
+});
+
 //404 Error
 app.use(function(req, res, next) { 
     res.status(404);

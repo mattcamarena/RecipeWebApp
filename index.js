@@ -114,6 +114,13 @@ app.post('/api/updaterecipe/:_id',function(req,res){
   }
 });
 
+/******           USER AUTH          ******/
+
+
+
+
+app.post('/regsiter')
+
 //404 Error
 app.use(function(req, res, next) { 
     res.status(404);

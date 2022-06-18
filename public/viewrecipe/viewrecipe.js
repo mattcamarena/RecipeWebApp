@@ -79,6 +79,7 @@ function removeInstruction(){
 
 
 function editRecipe(){
+  document.getElementById('editButt').style.display = "none";
   document.getElementById('viewdiv').style.display = "none";
   document.getElementById('editdiv').style.display = "block";
   loadRecipeonEdit();

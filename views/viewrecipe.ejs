@@ -13,21 +13,26 @@
     <a href="/"><header><h1>My Recipe</h1></header></a>
   </head>
   <body>
+    
     <main id=recp>
+      
       <div id="viewdiv">
         <h2 id="recipename"></h2>
         <h3>Ingredients</h3>
         <ul id="ingredients"></ul>
         <h3>Instructions</h3>
         <ol id="instructions"></ol>
+        
       </div>
-    <!-- EDIT -->  
+      <button onclick="editRecipe()" id="editButt">Edit Recipe</button>
+    <!--                      EDIT                              -->  
+      
       <div id="editdiv" style="display: none;">
       <form id="recipe-form" action="/api/updaterecipe/" method="post">
         <div>
           <label id="recipename-label" for="recipename" required>Recipe Name</label>
           <textarea id="uname" name="recipename" placeholder="Recipe's name" required></textarea>
-        </div>`
+        </div>
         
         <div id="gtxtarea">
           <label for="ingredient">Ingredients</label>
@@ -53,7 +58,7 @@
         </div>
     </main>
     
-    <button onclick="editRecipe()">Edit Recipe</button>
+    
     
     <footer>
     

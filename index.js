@@ -1,11 +1,13 @@
 // Package Requirements
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const bcrypt = require('bcrypt')
 //Express setup
 const app = express();
 const port = 3000;
 
+const mySalt = 10;
+const users = [];
 // Database
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI);
@@ -116,10 +118,42 @@ app.post('/api/updaterecipe/:_id',function(req,res){
 
 /******           USER AUTH          ******/
 
+app.get('/users', (req,res) => {
+  res.json(users)
+})
 
+app.post('/api/users', async (req,res) =>{
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, mySalt)
+    const user = {name: req.body.name, password: hashedPassword}
+    users.push(user)
+    res.status(201).send()
+  } catch{
+    res.status(500).send()
+  }
+})
 
+app.post('users/login', async (req,res)=>{
+  const user = users.find(user=> user.name === req.body.name)
+  if (user == null){
+    return res.status(400).send('cannot find user')      
+  }
+  try {
+    if(await bcrypt.compare(req.body.password, user.password)) {
+      res.send('sucess')
+    } else {
+      res.send('not success')
+    }
+  } catch {
+    res.status(500).send()
+  }
+})
+ 
 
-app.post('/regsiter')
+//
+app.get('/register', (req,res) => {
+  res.sendFile(__dirname + '/public/register/register.html');
+})
 
 //404 Error
 app.use(function(req, res, next) { 

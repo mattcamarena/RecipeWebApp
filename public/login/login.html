@@ -1,6 +1,9 @@
-<main>
-  <body>
-    <form id="user-form" action="/register" method="POST">
+  <head>
+    <script src="login.js"></script>
+  </head>
+
+  <form id="user-form"  action="/login" method="POST">
+      <div>Login</div>
       <div>
         <label id="username-label" for="name">Username</label>
         <input type="text" id="name" name="name" required>
@@ -10,6 +13,7 @@
         <input type="text" id="password" name="password" required>
       </div> 
       <button type="submit" value="submit">Submit</button>
-    </form>
+  </form>
+<body>
+  <button onclick="testfetch()">Test</button>
   </body>
-</main>

@@ -3,14 +3,39 @@
   <head>
     <link rel="stylesheet" href="view/styles.css">
     <script src="view/script.js"></script>
-    <a href="/"><header><h1>My Recipe</h1></header></a>
   </head>
-  <body>
+<body onload="loadCookies()">
+  <header > 
+    <a href="/"><h1>My Recipe</h1></a>  
+    <nav id="navbar">
+      <ul class="navlist" id="edit" style="color:black;">
+        <li ><a href="/register/register.html" style="color:black" >Register</a></li>
+        <li ><a href="login/login.html">Login</a></li>
+        <li id="uname"></li>
+        <li id="logout" onclick="logOut()">Log Out</li>
+      </ul>
+    </nav>
+  </header>
     <main>
       <a href="addrecipe/" id="addrecipebutton">Add Recipe</a>
       <div id = "tlholder">Loading Items</div>
       <ul id="myList">
       </ul>
     </main> 
+  <div class="form-popup" id="myForm">
+    <form id="user-form" action="users/login">
+      <div>Login</div>
+      <div>
+        <label id="username-label" for="name">Username</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div>
+        <label id="password-label" for="password">Password</label>
+        <input type="text" id="password" name="password" required>
+      </div> 
+      <button type="submit" value="submit">Submit</button>
+    </form>
+</div>
+  
   </body>
 </html>

@@ -3,26 +3,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt')
 const mySalt = 10;
-
+var sessions = require('express-session')
+const cookieParser = require("cookie-parser");
+const expireTime = 1000 * 60 * 60 * 24;
 //Express setup
 const app = express();
 const port = 3000;
 
-const users = [];
 // Database
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI);
-
-// Functions 
-//token creation
-function generateToken(n) {
-    var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    var token = '';
-    for(var i = 0; i < n; i++) {
-        token += chars[Math.floor(Math.random() * chars.length)];
-    }
-    return token;
-}
 
 /********* Schemas ********/
 // Schema for Recipes 
@@ -43,6 +33,8 @@ const userSchema = new Schema({
   priv: {type: Number},
   cookie: String
 });
+
+
 const User = mongoose.model("User", userSchema);
  
 // Paths
@@ -54,6 +46,15 @@ app.use(express.json({
 }))
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(cookieParser());
+app.use(sessions({
+    secret: process.env.SESSION_ID,
+    saveUninitialized:true,
+    cookie: { maxAge: expireTime },
+    resave: false
+}));
+
+var session;
 /**************     View REQUESTS       *************/
 // // Home View
 app.get('/', (req, res) => { res.sendFile((__dirname + '/public/view/index.html'));  });
@@ -123,7 +124,6 @@ app.get('/api/deleterecipe/:_id',function(req,res){
     if(err) return console.log(err);
   });  
   }
-  res.json("gj");
 });
 
 app.post('/api/updaterecipe/:_id',function(req,res){
@@ -147,126 +147,73 @@ app.post('/api/updaterecipe/:_id',function(req,res){
 
 
 /******           USER AUTH          ******/
-app.get('/users', (req,res) => {
-  res.json(users)
-})
 
-app.post('/api/users', async (req,res) =>{
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, mySalt)
-    const user = {name: req.body.name, password: hashedPassword}
-    users.push(user)
-    res.status(201).send('hi')
-  } catch{
-    res.status(500).send('bye')
+app.post('/verifyCookie', async (req,res) => {
+  var uname = req.body.username
+  var ucookie = req.body.cookie
+  if(uname == ''){
+    console.log("huh")
+    res.json("-1")
+  }else{
+  User.findOne({username: uname}, async (err, resu) => {
+    if(!err){
+      console.log(resu);
+      console.log("?")
+      res.json({message: "valid"})
+    }else{
+      console.log("huh2")
+      res.json({message: "-1"})
+    }
+  })
   }
 })
 
 
-app.post('/testB', async (req,res) => {
-  var ucookie = generateToken(32);
+app.post('/login', async (req,res)=>{
   var uname = req.body.username;
   var pass = req.body.password;
-  User.findOneAndUpdate({username: uname}, {cookie: ucookie}, function(err,rest){
-      if(!err){
-        res.json({token: ucookie})
-        
-      }else{
-        res.json({message: "error"});
-      }
-      
-    });  
-})
 
-
-
-app.post('/testA', async (req, res) => {
+  //cookie
+  User.findOne({username: uname}, async(err,res) => {
+    if(!err){
+      try{
+        if(await bcrypt.compare(pass, results.hashedpass)) { 
   
-  try{
-    var uname = req.body.username;
-    var pass = req.body.password;
-    //Check if User exists
-    User.find({username: uname}, async (err,results) => { // Check Username available
-      if(err){
-        res.json({message:"0"})
-        
-      }else if(!results.length){ // No user exists
-        res.json({message: "-1"})
-      }else{ // validate password
-        console.log(results)
-        try {
-          if(await bcrypt.compare(pass, results[0].hashedpass)) { 
-            //CREATE TOKEN --> create logged in  & send back 
-            results.cookies = generateToken(32);
-            results.save((err,updatedPerson)=>{
-              if(err)  console.log(err);
-              done(null,updatedPerson)
-            })
-            res.json({message: "1", token: "to be done"})
-          } else {
-            res.json({message: "-2"})
-          }
-        } catch {
+          res.json({message: "valid",  uname: unames})
+        } else {
+          res.json({message: "Invalid User/ Password"})
+        }        
+        }catch{
+          res.json({message: "Error"})
+        }
+    }else {
+      res.json({message: "Error"})
+    }
+  })
+  User.findOneAndUpdate({username: uname}, {cookie: ucookie}, async (err,results) => {
+      if(!err){ 
+        // No error validate password
+        ucookie = 'token=' + ucookie + '; ' + "expires=" + expires +'; path=/';
+        var unames = 'uname=' + uname + '; ' + "expires=" + expires +'; path=/';
+        try{
+        if(await bcrypt.compare(pass, results.hashedpass)) { 
+          //Send cookie if valid 
+          
+          res.json({message: "valid", token: ucookie, uname: unames})
+        } else {
+         
+          res.json({message: "-2"})
+        }        
+        }catch{
+          
           res.json({message: "-3"})
         }
         
+      }else{
+        
+        res.json({message: "error"});
       }
-    })
-  } catch{
-    res.send({message:"-4"})
-  }
-  
-  
-})
-
-app.post('/login', async (req,res)=>{
-
-  console.log(req.body);
-  
-  /*
-  var uname = req.body.name;
-  try{
-    User.find({username: uname}, function (err,results){ // Check Username available
-      if(err){
-        console.log("?")
-        res.send(err)
-      }
-      else if(!results.length){ // If no user exists make one
-        console.log(uname);
-        console.log("??")
-        console.log(results)
-        res.json({message: "user does not exist"})
-       
-      }else{ // send error
-        console.log("???")
-        console.log(results);
-        res.send({message:"wow"})
-      }
-    })
-  } catch{
-    console.log("????")
-    res.send({message:"no work"})
-  }
-  */
-
-  console.log("attempting login")
-  /*
-  const user = users.find(user=> user.name === req.body.name)
-  if (user == null){
-    
-    return res.status(400).send('cannot find user')      
-  }
-  try {
-    if(await bcrypt.compare(req.body.password, user.password)) {
-      res.send('sucess')
-    } else {
-      res.send('not success')
-    }
-  } catch {
-    res.status(500).send()
-  }
-  */
-
+    });  
 })
  
 // Register User 

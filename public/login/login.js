@@ -1,4 +1,32 @@
 
+checkLogged()
+
+function checkLogged(){
+  var cookie = getCookie("token");
+  var uname = getCookie("uname");
+  
+    if(cookie != '' && uname != ''){
+    fetch('/verifyCookie', {                                                                                                                
+    method: 'post',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify( {
+      "username" : uname,
+      "cookie" : cookie
+    }),
+  }).then (response => response.json())
+  .then(data => {
+    if(data.message == "valid"){
+      window.location.assign("https://recipewebapp.mattcamarena.repl.co/")
+    }else{
+      console.log(data)
+      console.log("not valid input")
+    }
+    
+    
+  })
+      
+  }
+}
 
 function testfetch(){
   
@@ -7,43 +35,60 @@ function testfetch(){
     method: 'post',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify( {
-      "username" : "matt",
-      "password" : "pass"
-    }),
-  }).then (response => response.json())
-  .then(data => console.log(data))
-)
-}
-function login(){
-  
-
-
-  /*
-    var data = new FormData();
-  data.append("name", document.getElementById("name").value);
-  data.append("password", document.getElementById("password").value);
-  fetch('/login', {  
-    method: 'post',
-    mode: 'cors',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify( {
       "username" : "test",
       "password" : "test"
     }),
-  })
-  
-  fetch("/login", {
-    method: "POST",
-    body: data
-  })
-    .then((response) => {
+  }).then (response => response.json())
+  .then(data => {
+    if(data.message == "valid"){
+      document.cookie = data.token;
       console.log("?")
-      response.json()})
-    .then((result) => {
-      console.log('suc', result);
-    })
-  .catch((err) => {
-    console.log('err', err)
+      console.log(data.token)
+    }else{
+      console.log(data)
+      console.log("not valid input")
+    }
+    
+    
   })
-  */
+)
+}
+function login(){
+  var uname = document.getElementById("name").value;
+  
+  var pass = document.getElementById("password").value
+  console.log(uname)
+  fetch('/login', {  
+    method: 'post',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify( {
+      "username" : uname,
+      "password" : pass
+    }),
+  }).then (response => response.json())
+  .then(data => {
+    if(data.message == "valid"){
+      location.reload()
+    }else{
+      console.log(data)
+      alert("not valid input")
+     
+    }
+    
+  })
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }

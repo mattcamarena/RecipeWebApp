@@ -4,6 +4,7 @@ fetch("./api/getrecipes")
 })
 .then(jsondata => loadtopage(jsondata))
 
+checkLogged()
 
 function loadtopage(jsn) {
 
@@ -51,8 +52,14 @@ function loadCookies(){
 
 function logOut(){
   // make a call user wants to log out
+  document.cookie = `uname=; expires=-99`
+  document.cookie = `token=; expires=-99`
+
   document.getElementById("edit").children[0].style.display = "unset";
   document.getElementById("edit").children[1].style.display = "unset";
+  document.getElementById("edit").children[2].style.display = "none";
+  document.getElementById("edit").children[3].style.display = "none";  
+  
 }
 function setCookie(cname, cvalue, exdays) {
   const d = new Date();
@@ -86,4 +93,31 @@ function checkCookie() {
       setCookie("username", user, 365);
     }
   }
+}
+
+function checkLogged(){
+  
+    fetch('/verifyCookie', {                                                                                                        
+    method: 'post',
+    headers: {'Content-Type': 'application/json'},
+  }).then (response => response.json())
+  .then(data => {
+    if(data.message == "valid"){
+      console.log("val")
+      document.getElementById("edit").children[0].style.display = "none";
+      document.getElementById("edit").children[1].style.display = "none";
+      document.getElementById("edit").children[2].style.display = "unset";
+      document.getElementById("edit").children[3].style.display = "unset";  
+      document.getElementById("uname").innerHTML = uname;
+    }else{
+      console.log("notvalid")
+      document.getElementById("edit").children[0].style.display = "unset";
+      document.getElementById("edit").children[1].style.display = "unset";
+      document.getElementById("edit").children[2].style.display = "none";
+      document.getElementById("edit").children[3].style.display = "none";  
+    }
+    
+    
+  })
+
 }

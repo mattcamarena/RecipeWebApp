@@ -2,7 +2,7 @@
     <script src="login.js"></script>
   </head>
 
-  <form id="user-form"  action="/login" method="POST">
+  <form id="user-form" action="#"  >
       <div>Login</div>
       <div>
         <label id="username-label" for="name">Username</label>
@@ -12,8 +12,10 @@
         <label id="password-label" for="password">Password</label>
         <input type="text" id="password" name="password" required>
       </div> 
-      <button type="submit" value="submit">Submit</button>
+      
   </form>
+
 <body>
+  <button value="submit" onclick="login()">Submit</button>
   <button onclick="testfetch()">Test</button>
   </body>

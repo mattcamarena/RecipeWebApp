@@ -2,34 +2,23 @@
 checkLogged()
 
 function checkLogged(){
-  var cookie = getCookie("token");
-  var uname = getCookie("uname");
   
-    if(cookie != '' && uname != ''){
-    fetch('/verifyCookie', {                                                                                                                
+    fetch('/verifySession', {
     method: 'post',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify( {
-      "username" : uname,
-      "cookie" : cookie
-    }),
-  }).then (response => response.json())
-  .then(data => {
-    if(data.message == "valid"){
-      window.location.assign("https://recipewebapp.mattcamarena.repl.co/")
-    }else{
-      console.log(data)
-      console.log("not valid input")
-    }
-    
-    
+    }).then (response => response.json())
+    .then(data => {
+      if(data.message == "valid"){
+        window.location.assign("https://recipewebapp.mattcamarena.repl.co/")
+      }else{
+        console.log(data)
+        console.log("not valid input")
+      }
   })
-      
-  }
 }
 
+
 function testfetch(){
-  
   console.log(
     fetch('/testB', {  
     method: 'post',
@@ -53,6 +42,7 @@ function testfetch(){
   })
 )
 }
+
 function login(){
   var uname = document.getElementById("name").value;
   
@@ -68,6 +58,7 @@ function login(){
   }).then (response => response.json())
   .then(data => {
     if(data.message == "valid"){
+
       location.reload()
     }else{
       console.log(data)
@@ -76,19 +67,4 @@ function login(){
     }
     
   })
-}
-
-function getCookie(cname) {
-  let name = cname + "=";
-  let ca = document.cookie.split(';');
-  for(let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
 }

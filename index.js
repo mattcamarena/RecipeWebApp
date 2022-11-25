@@ -148,23 +148,12 @@ app.post('/api/updaterecipe/:_id',function(req,res){
 
 /******           USER AUTH          ******/
 
-app.post('/verifyCookie', async (req,res) => {
-  var uname = req.body.username
-  var ucookie = req.body.cookie
-  if(uname == ''){
-    console.log("huh")
-    res.json("-1")
+app.post('/verifySession', async (req,res) => {
+  session = req.session;
+  if(session.userId){
+    res.json({message: "valid", username: session.userId})
   }else{
-  User.findOne({username: uname}, async (err, resu) => {
-    if(!err){
-      console.log(resu);
-      console.log("?")
-      res.json({message: "valid"})
-    }else{
-      console.log("huh2")
-      res.json({message: "-1"})
-    }
-  })
+    res.json({message: "-1"})
   }
 })
 
@@ -172,48 +161,28 @@ app.post('/verifyCookie', async (req,res) => {
 app.post('/login', async (req,res)=>{
   var uname = req.body.username;
   var pass = req.body.password;
-
+  
   //cookie
-  User.findOne({username: uname}, async(err,res) => {
+  User.findOne({username: uname}, async(err,results) => {
     if(!err){
       try{
         if(await bcrypt.compare(pass, results.hashedpass)) { 
-  
-          res.json({message: "valid",  uname: unames})
+          session = req.session;
+          session.userId = uname;
+          res.json({message: "valid",  uname: uname})
+          
         } else {
           res.json({message: "Invalid User/ Password"})
-        }        
-        }catch{
-          res.json({message: "Error"})
         }
+        
+      }catch{
+        res.json({message: "Error"})
+      }
     }else {
       res.json({message: "Error"})
     }
   })
-  User.findOneAndUpdate({username: uname}, {cookie: ucookie}, async (err,results) => {
-      if(!err){ 
-        // No error validate password
-        ucookie = 'token=' + ucookie + '; ' + "expires=" + expires +'; path=/';
-        var unames = 'uname=' + uname + '; ' + "expires=" + expires +'; path=/';
-        try{
-        if(await bcrypt.compare(pass, results.hashedpass)) { 
-          //Send cookie if valid 
-          
-          res.json({message: "valid", token: ucookie, uname: unames})
-        } else {
-         
-          res.json({message: "-2"})
-        }        
-        }catch{
-          
-          res.json({message: "-3"})
-        }
-        
-      }else{
-        
-        res.json({message: "error"});
-      }
-    });  
+  
 })
  
 // Register User 
@@ -242,6 +211,11 @@ app.post('/register', async (req,res) => {
     res.status(500).send()
   }
 })
+
+app.get('/logout',(req,res) => {
+    req.session.destroy();
+    res.redirect('/');
+});
 
 app.post('/test', async (req,res) => {
   console.log(generateToken(32))

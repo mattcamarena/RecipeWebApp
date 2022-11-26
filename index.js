@@ -7,7 +7,7 @@ var sessions = require('express-session')
 const cookieParser = require("cookie-parser");
 const expireTime = 1000 * 60 * 60 * 24;
 //Express setup
-const app = express();
+const app = express(); 
 const port = 3000;
 
 // Database

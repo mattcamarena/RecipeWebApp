@@ -1,3 +1,4 @@
+
 fetch("./api/getrecipes")
 .then(response => {
   return response.json();
@@ -16,7 +17,6 @@ function loadtopage(jsn) {
       let a = document.createElement('a');
       a.innerText = item.name;
       a.href = "viewrecipe/" + item._id;
-      //li.innerText = item;
       li.appendChild(a);
       list.appendChild(li);
       document.getElementById("tlholder").innerText = "";
@@ -25,19 +25,6 @@ function loadtopage(jsn) {
     document.getElementById("tlholder").innerText = "No recipes found";
   }
 }
-
-
-function logOut(){
-  // make a call user wants to log out
-  document.cookie = `uname=; expires=-99`
-  document.cookie = `token=; expires=-99`
-  
-  document.getElementById("edit").children[0].style.display = "unset";
-  document.getElementById("edit").children[1].style.display = "unset";
-  document.getElementById("edit").children[2].style.display = "none";
-  document.getElementById("edit").children[3].style.display = "none";  
-}
-
 
 function checkLogged(){
  

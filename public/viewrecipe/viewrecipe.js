@@ -79,10 +79,21 @@ function removeInstruction(){
 
 
 function editRecipe(){
-  document.getElementById('editButt').style.display = "none";
-  document.getElementById('viewdiv').style.display = "none";
-  document.getElementById('editdiv').style.display = "block";
-  loadRecipeonEdit();
+  fetch('/verifySession', {
+    method: 'post',
+    headers: {'Content-Type': 'application/json'},
+    })
+  .then(response => response.json())
+  .then(data => {
+    if(data.message == "valid"){
+      document.getElementById('editButt').style.display = "none";
+      document.getElementById('viewdiv').style.display = "none";
+      document.getElementById('editdiv').style.display = "block";
+      loadRecipeonEdit();
+    }else {
+      window.location.href = "/login/login.html"
+    }
+    })
 }
 
 function loadRecipeonEdit(){

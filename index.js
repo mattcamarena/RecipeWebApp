@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 const mySalt = 10;
 var sessions = require('express-session')
 const cookieParser = require("cookie-parser");
+
 const expireTime = 1000 * 60 * 60 * 24;
 //Express setup
 const app = express(); 
@@ -22,7 +23,11 @@ const Schema = mongoose.Schema;
 const recipeSchema = new Schema({
   name: { type: String, required: true},
   ingredients: [String],
-  instructions: [String]
+  instructions: [String],
+  author: String,
+  share: Boolean,
+  viewed: Number,
+  used: Number,
 });// Future thoughts: Author / date made / type(breakfast lunch dinner)
 const Recipe = mongoose.model("Recipe", recipeSchema);
 
@@ -33,8 +38,6 @@ const userSchema = new Schema({
   priv: {type: Number},
   cookie: String
 });
-
-
 const User = mongoose.model("User", userSchema);
  
 // Paths
@@ -67,8 +70,13 @@ app.get('/viewrecipe/:id',function(req,res){
 
 // // Add Recipe View  
 app.get('/addrecipe',function(req,res){
-  var recipeG = req.params.food;
-  res.render('addrecipe.ejs', {recipeG});
+    session = req.session;
+  if(session.userId){
+    var recipeG = req.params.food;
+    res.render('addrecipe.ejs', {recipeG});
+  }else{
+    res.redirect("/login/login.html")
+  }
 });
 
 /**************     API REQUESTS       *************/
@@ -150,6 +158,7 @@ app.post('/api/updaterecipe/:_id',function(req,res){
 
 app.post('/verifySession', async (req,res) => {
   session = req.session;
+
   if(session.userId){
     res.json({message: "valid", username: session.userId})
   }else{
@@ -189,6 +198,9 @@ app.post('/login', async (req,res)=>{
 app.post('/register', async (req,res) => {
   console.log("registered new user");
   try {
+    if(req.body.referral != process.env.REFERRAL_CODE){
+      return res.send({message: "Referral"})
+    }
     const uname = req.body.name
     const hashedPassword = await bcrypt.hash(req.body.password, mySalt)
     var privi = 0;
@@ -217,13 +229,6 @@ app.get('/logout',(req,res) => {
     res.redirect('/');
 });
 
-app.post('/test', async (req,res) => {
-  console.log(generateToken(32))
-  
-  console.log("registered new user");
-  res.send("ok")
-})
-
 //404 Error
 app.use(function(req, res, next) { 
     res.status(404);
@@ -234,6 +239,3 @@ app.use(function(req, res, next) {
 app.listen(port, function(){
   console.log(`App server is running on port ${port}`);
 });
-
-// LOGIN
-

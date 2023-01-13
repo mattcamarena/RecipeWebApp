@@ -6,7 +6,13 @@
   </head>
 <body>
   <header > 
-    <a href="/"><h1>My Recipe</h1></a>  
+    <div class="dropdown" style="float:left;">
+      <button class="dropbtn">Menu</button>
+      <div class="dropdown-content" style="left:0;">
+        <a href="/viewmyrecipes">My Recipes</a>
+      </div>
+    </div>
+    <a href="/"><h1>Recipes</h1></a>  
     <nav id="navbar">
       <ul class="navlist" id="edit" style="color:black;">
         <li ><a href="/register/register.html" >Sign Up</a></li>
@@ -14,7 +20,9 @@
         <li id="uname"></li>
         <li id="logout" ><a href="/logout">Log Out</a></li>
       </ul>
+      
     </nav>
+    
   </header>
     <main>
       <a href="addrecipe/" id="addrecipebutton">Add Recipe</a>

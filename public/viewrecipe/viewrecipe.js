@@ -1,5 +1,25 @@
 var rid = "";
 var saveRecipe;
+
+checkLogged()
+
+function checkLogged(){
+ 
+    fetch('/verifySession', {
+    method: 'post',
+    headers: {'Content-Type': 'application/json'},
+    }).then (response => response.json())
+    .then(data => {
+      if(data.message == "valid"){
+        console.log("val")
+        document.getElementById("editButt").style.display = "unset";
+
+      }else{
+        console.log("notvalid")
+      }
+    })
+}
+
 function loadtopage(jsn) {
   saveRecipe = jsn;
   rid = jsn._id;

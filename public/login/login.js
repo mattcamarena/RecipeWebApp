@@ -44,7 +44,7 @@ function testfetch(){
 }
 
 function login(){
-  var uname = document.getElementById("name").value;
+  var uname = document.getElementById("username").value;
   
   var pass = document.getElementById("password").value
   console.log(uname)

@@ -205,7 +205,7 @@ app.post('/verifySession', async (req, res) => {
 app.post('/login', async (req, res) => {
   var uname = req.body.username;
   var pass = req.body.password;
-
+  console.log(uname)
   //cookie
   User.findOne({ username: uname }, async (err, results) => {
     if (!err) {

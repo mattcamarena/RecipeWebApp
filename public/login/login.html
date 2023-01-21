@@ -1,21 +1,30 @@
+<html>
   <head>
     <script src="login.js"></script>
+    <link rel="stylesheet" href="login.css">
   </head>
+  <body>
+    <div class="card-layout">
+    <div class="login-card-container">
+      <div class="login-card">
+        <div>Login</div> <br>
+        <form id="user-form" action="#">
+<label class="custom-field">
+  <input type="username" id= "username" placeholder="&nbsp;"/>
+  <span class="placeholder">Enter Username</span>
+  </label>
 
-  <form id="user-form" action="#"  >
-      <div>Login</div>
-      <div>
-        <label id="username-label" for="name">Username</label>
-        <input type="text" id="name" name="name" required>
+
+<label class="custom-field three">
+  <input type="password" id="password" placeholder="&nbsp;"/>
+  <span class="placeholder">Enter Password</span>
+  <span class="border"></span>
+</label>
+        <button class="custom-button" onclick="login()"> Submit</button>
+        </form>
+        <div><p>Don't have an account? <a href="/register/register.html">Sign up<a></a><p>
       </div>
-      <div>
-        <label id="password-label" for="password">Password</label>
-        <input type="text" id="password" name="password" required>
-      </div> 
-      
-  </form>
-
-<body>
-  <button value="submit" onclick="login()">Submit</button>
-  <button onclick="document.location.href='/register/register.html'">Sign Up</button>
+    </div>
+    </div>
   </body>
+</html>

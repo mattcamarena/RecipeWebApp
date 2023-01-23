@@ -1,19 +1,43 @@
-<main>
-  <body>
-    <form id="user-form" action="/register" method="POST">
-      <div>
-        <label id="username-label" for="name">Username</label>
-        <input type="text" id="name" name="name" required>
+<html>
+  
+<head>
+  <script src="register.js"></script>
+  <link rel="stylesheet" href="register.css">
+</head>
+  
+<body>
+  <header > 
+    <a href="/"><h1>Recipes</h1></a>  
+  </header>
+    <div class="card-layout">
+    <div class="login-card-container">
+      <div class="login-card">
+        <div>Register</div> <br>
+        <form id="user-form" action="">
+<label class="custom-field">
+  <input type="username" id= "username" placeholder="&nbsp;"/>
+  <span class="placeholder">Enter Username</span>
+  </label>
+
+
+<label class="custom-field three">
+  <input type="password" id="password" placeholder="&nbsp;"/>
+  <span class="placeholder">Enter Password</span>
+  <span class="border"></span>
+</label>
+
+<label class="custom-field three">
+  <input type="refferal" id="refferal" placeholder="&nbsp;"/>
+  <span class="placeholder">Refferal Code</span>
+  <span class="border"></span>
+</label>
+       
+        </form>
+        <button class="custom-button" onclick="register()"> Submit</button>
+        <div><p>Already have an Account? <a href="/login/login.html" style="color:blue">Sign in<a></a><p>
       </div>
-      <div>
-        <label id="password-label" for="password">Password</label>
-        <input type="text" id="password" name="password" required>
-      </div>
-      <div>
-        <label id="password-label" for="password">Referral Code</label>
-        <input type="text" id="referral" name="referral" required>
-      </div> 
-      <button type="submit" value="submit">Submit</button>
-    </form>
-  </body>
-</main>
+    </div>
+    </div>
+</body>
+  
+</html>

@@ -94,7 +94,7 @@ app.get('/viewmyrecipes', function(req, res) {
 /**************     API REQUESTS       *************/
 // returns a .json with the list of recipe names + id's
 app.get('/api/getrecipes', (req, res) => {
-  Recipe.find({}, { name: 1, _id: 1 }, function(err, arr) {
+  Recipe.find({ share: 1}, { name: 1, _id: 1 }, function(err, arr) {
     if (err) return console.log("cerr" + err);
     else {
       res.json(arr);
@@ -149,7 +149,7 @@ app.post('/api/addrecipe/', (req, res) => {
     var ing = req.body.ingredient ? [].concat(req.body.ingredient) : [];
     var ins = req.body.instruction ? [].concat(req.body.instruction) : [];
     var aut = session.userId;
-    var newRecipe = new Recipe({ name: recipeA, ingredients: ing, instructions: ins, author: aut });
+    var newRecipe = new Recipe({ name: recipeA, ingredients: ing, instructions: ins, author: aut, share: 1 });
     newRecipe.save(function(err, data) {
       if (err) return console.error(err);
       res.render('viewrecipe.ejs', { recipeId: newRecipe._id });

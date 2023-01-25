@@ -8,8 +8,9 @@ Have user authorization to restrict adding / deleting / editing
 Privatize recipes 
 
 Search for certain recipes by:
-Name
-Ingredients
-Type
-Author
-Edit/ Delete Recipes
+Name\
+Ingredients\
+Type\
+Author\
+Edit\
+Delete Recipes\

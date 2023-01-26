@@ -35,17 +35,14 @@ function checkLogged(){
     .then(data => {
       if(data.message == "valid"){
         console.log("val")
-        document.getElementById("edit").children[0].style.display = "none";
-        document.getElementById("edit").children[1].style.display = "none";
-        document.getElementById("edit").children[2].style.display = "unset";
-        document.getElementById("edit").children[3].style.display = "unset";  
+        document.getElementById("edit").children[0].style.display = "unset";
+        document.getElementById("edit").children[1].style.display = "unset"; 
         document.getElementById("uname").innerHTML = data.username;
       }else{
         console.log("notvalid")
-        document.getElementById("edit").children[0].style.display = "unset";
-        document.getElementById("edit").children[1].style.display = "unset";
-        document.getElementById("edit").children[2].style.display = "none";
-        document.getElementById("edit").children[3].style.display = "none";  
+        document.getElementById("edit").children[0].style.display = "none";
+        document.getElementById("edit").children[1].style.display = "none";
+
       }
     })
 }

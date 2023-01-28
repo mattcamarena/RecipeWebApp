@@ -178,9 +178,9 @@ app.post('/api/updaterecipe/:_id', function(req, res) {
   var uName = req.body.recipename.trim();
   var ing = req.body.ingredient ? [].concat(req.body.ingredient) : [];
   var ins = req.body.instruction ? [].concat(req.body.instruction) : [];
-
+  var shar = req.body.makepublic ? req.body.makepublic : false;
   if (rid != null) {
-    Recipe.findOneAndUpdate({ _id: rid }, { name: uName, ingredients: ing, instructions: ins }, function(err, rest) {
+    Recipe.findOneAndUpdate({ _id: rid }, { name: uName, ingredients: ing, instructions: ins, share: shar }, function(err, rest) {
       if (!err) {
         res.render('viewrecipe.ejs', { recipeId: rid });
       } else {
